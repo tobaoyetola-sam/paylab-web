@@ -1,0 +1,37 @@
+{
+  "family": "paylab-web",
+  "requiresCompatibilities": [
+    "FARGATE"
+  ],
+  "networkMode": "awsvpc",
+  "cpu": "256",
+  "memory": "512",
+  "runtimePlatform": {
+    "cpuArchitecture": "X86_64",
+    "operatingSystemFamily": "LINUX"
+  },
+  "executionRoleArn": "arn:aws:iam::<ACCOUNT_ID>:role/ecsTaskExecutionRole",
+  "taskRoleArn": "arn:aws:iam::<ACCOUNT_ID>:role/paylabTaskRole",
+  "containerDefinitions": [
+    {
+      "name": "web",
+      "image": "<ACCOUNT_ID>.dkr.ecr.<REGION>.amazonaws.com/paylab/web:v1",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 3000,
+          "protocol": "tcp"
+        }
+      ],
+      "environment": [],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/paylab",
+          "awslogs-region": "<REGION>",
+          "awslogs-stream-prefix": "web"
+        }
+      }
+    }
+  ]
+}
