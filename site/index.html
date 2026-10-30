@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PayLab</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo" aria-hidden="true">◆</span>
+      <span>aricxpoint labs · <strong>PayLab</strong></span>
+    </div>
+    <div class="topbar-right">
+      <span class="api-pill" id="api-info">API: same origin</span>
+      <button id="switch-wallet" class="btn btn-ghost hidden">Switch wallet</button>
+    </div>
+  </header>
+
+  <!-- Onboarding: create or open a wallet -->
+  <main id="onboarding" class="grid">
+    <section class="card">
+      <h2>Create my wallet</h2>
+      <p class="muted">New wallets get a ₦10,000 demo credit.</p>
+      <form id="create-form" class="stack">
+        <label>Your name
+          <input id="create-owner" required autocomplete="off" placeholder="Ada Lovelace">
+        </label>
+        <label>Handle <small>(3-20 characters: a-z, 0-9, _)</small>
+          <div class="handle-input"><span>@</span>
+            <input id="create-handle" required autocomplete="off" pattern="[a-z0-9_]{3,20}" placeholder="ada">
+          </div>
+        </label>
+        <button type="submit" class="btn">Create wallet</button>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Open my wallet</h2>
+      <p class="muted">Already have one? Enter your handle.</p>
+      <form id="open-form" class="stack">
+        <label>Handle
+          <div class="handle-input"><span>@</span>
+            <input id="open-handle" required autocomplete="off" placeholder="ada" list="directory">
+          </div>
+        </label>
+        <button type="submit" class="btn">Open wallet</button>
+      </form>
+    </section>
+
+    <div id="onboarding-msg" class="result hidden wide" role="status" aria-live="polite"></div>
+  </main>
+
+  <!-- Main view: balance, send money, history -->
+  <main id="app" class="grid hidden">
+    <section class="card">
+      <div class="label">Balance</div>
+      <div class="balance" id="balance">-</div>
+      <div class="meta" id="who"></div>
+      <div class="live"><span class="dot"></span> live, updates every 4s</div>
+    </section>
+
+    <section class="card">
+      <h2>Send money</h2>
+      <form id="send-form" class="stack">
+        <label>To
+          <div class="handle-input"><span>@</span>
+            <input id="to-handle" required autocomplete="off" list="directory" placeholder="bola">
+          </div>
+        </label>
+        <label>Amount (₦)
+          <input id="amount" type="number" min="0.01" step="0.01" required placeholder="1500">
+        </label>
+        <label>Note <small>(optional)</small>
+          <input id="note" maxlength="140" autocomplete="off" placeholder="Lunch">
+        </label>
+        <button type="submit" id="send-btn" class="btn">Send</button>
+      </form>
+      <div id="result" class="result hidden" role="status" aria-live="polite"></div>
+    </section>
+
+    <section class="card wide">
+      <h2>History</h2>
+      <ul id="history" class="history"><li class="muted">No payments yet.</li></ul>
+    </section>
+  </main>
+
+  <datalist id="directory"></datalist>
+
+  <footer>Lab demo: no real money moves. Amounts are stored in kobo (₦1 = 100 kobo).</footer>
+
+  <!-- config.js is generated when the container starts (sets window.PAYLAB_API_BASE) -->
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
