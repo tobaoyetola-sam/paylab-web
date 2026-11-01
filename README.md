@@ -1,3 +1,10 @@
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset=".github/aricxpoint-logo-white.png">
+    <img alt="aricxpoint technologies" src=".github/aricxpoint-logo-black.png" width="320">
+  </picture>
+</p>
+
 # paylab-web
 
 Part of **PayLab** (aricxpoint DevOps class: "Payment Web App Deployment").
@@ -54,7 +61,7 @@ git push (main) -> CodePipeline Source -> CodeBuild (buildspec.yml) -> ECR payla
 | File | Purpose |
 |---|---|
 | `buildspec.yml` | CodeBuild steps: log in to ECR, build, push `:<short-commit>` and `:latest`, write `imagedefinitions.json`. |
-| `taskdef.json` | ECS task definition template (family `paylab-web`, container `web`, port 3000). Registered once by `paylab-infra/07-services.sh`. |
+| `taskdef.json` | ECS task definition template (family `paylab-web`, container `web`, port 3000). Registered by `paylab-infra/terraform` (`ecs.tf`); the pipeline then registers a new revision on every deploy. |
 
 The container name in `taskdef.json` and in `imagedefinitions.json` is `web`. They **must match**, or the deploy stage fails.
 Live at **https://pay.lab.aricxpoint.co**: the ALB's HTTPS listener sends everything to `paylab-web-tg` (this service)
